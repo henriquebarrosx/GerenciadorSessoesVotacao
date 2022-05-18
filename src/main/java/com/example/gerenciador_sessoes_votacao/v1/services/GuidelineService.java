@@ -1,13 +1,12 @@
-package com.example.gerenciador_sessoes_votacao.services;
+package com.example.gerenciador_sessoes_votacao.v1.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.gerenciador_sessoes_votacao.entities.Guideline;
-import com.example.gerenciador_sessoes_votacao.repositories.GuidelineRepository;
-import com.example.gerenciador_sessoes_votacao.exceptions.GuidelineNotFoundException;
+import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
+import com.example.gerenciador_sessoes_votacao.v1.repositories.GuidelineRepository;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineNotFoundException;
 
 @Service
 @RequiredArgsConstructor

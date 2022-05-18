@@ -1,8 +1,8 @@
-package com.example.gerenciador_sessoes_votacao.controllers;
+package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
 import java.util.List;
-import com.example.gerenciador_sessoes_votacao.entities.Guideline;
-import com.example.gerenciador_sessoes_votacao.services.GuidelineService;
+import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
+import com.example.gerenciador_sessoes_votacao.v1.services.GuidelineService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.example.gerenciador_sessoes_votacao.entities;
+package com.example.gerenciador_sessoes_votacao.v1.entities;
 
 import lombok.*;
 import javax.persistence.*;

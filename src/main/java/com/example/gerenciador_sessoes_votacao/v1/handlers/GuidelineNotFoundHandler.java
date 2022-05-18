@@ -1,6 +1,6 @@
-package com.example.gerenciador_sessoes_votacao.handlers;
+package com.example.gerenciador_sessoes_votacao.v1.handlers;
 
-import com.example.gerenciador_sessoes_votacao.exceptions.GuidelineNotFoundException;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
