@@ -23,12 +23,8 @@ public class GuidelineService {
     }
 
     public Guideline getGuidelineById(Long guidelineId) {
-        Optional<Guideline> guideline = guidelineRepository.findById(guidelineId);
-
-        if (guideline.isEmpty()) {
-            throw new GuidelineNotFoundException(guidelineId);
-        }
-
-        return guideline.get();
+        return guidelineRepository
+                .findById(guidelineId)
+                .orElseThrow(() -> new GuidelineNotFoundException(guidelineId));
     }
 }
