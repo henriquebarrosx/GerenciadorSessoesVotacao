@@ -14,6 +14,10 @@ import com.example.gerenciador_sessoes_votacao.exceptions.GuidelineNotFoundExcep
 public class GuidelineService {
     private final GuidelineRepository guidelineRepository;
 
+    public Guideline createGuideline(Guideline guideline) {
+        return guidelineRepository.save(guideline);
+    }
+
     public List<Guideline> getGuidelines() {
         return guidelineRepository.findAll();
     }

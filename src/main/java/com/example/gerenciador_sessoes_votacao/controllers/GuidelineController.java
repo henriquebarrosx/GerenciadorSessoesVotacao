@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class GuidelineController {
     private final GuidelineService guidelineService;
 
+    @PostMapping("/guidelines/new")
+    public Guideline createGuideline(@RequestBody Guideline guideline) {
+        return guidelineService.createGuideline(guideline);
+    }
+
     @GetMapping("/guidelines/{id}")
     public Guideline fetchGuidelineById(@PathVariable(value = "id") Long guidelineId) {
         return guidelineService.getGuidelineById(guidelineId);
