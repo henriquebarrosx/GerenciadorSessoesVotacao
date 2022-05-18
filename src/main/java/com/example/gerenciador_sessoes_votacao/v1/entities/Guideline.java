@@ -20,14 +20,14 @@ public class Guideline {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column
+    private Long durationInMinutes;
+
+    @Column
     private LocalDateTime finishedAt;
 
-    @Column(nullable = false)
-    private Boolean inProgress = false;
-
-    public Guideline(String title, LocalDateTime finishedAt) {
+    public Guideline(String title, Long durationInMinutes) {
         this.title = title;
-        this.finishedAt = finishedAt;
+        this.durationInMinutes = durationInMinutes;
     }
 }

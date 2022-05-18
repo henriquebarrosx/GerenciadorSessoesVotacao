@@ -15,16 +15,21 @@ public class GuidelineController {
 
     @PostMapping("/guidelines/new")
     public Guideline createGuideline(@RequestBody Guideline guideline) {
-        return guidelineService.createGuideline(guideline);
+        return guidelineService.create(guideline);
+    }
+
+    @PutMapping("/guidelines/{id}/edit")
+    public Guideline startGuidelineSession(@PathVariable(value = "id") Long guidelineId) {
+        return guidelineService.startSession(guidelineId);
     }
 
     @GetMapping("/guidelines/{id}")
     public Guideline fetchGuidelineById(@PathVariable(value = "id") Long guidelineId) {
-        return guidelineService.getGuidelineById(guidelineId);
+        return guidelineService.findByById(guidelineId);
     }
 
     @GetMapping("/guidelines")
     public List<Guideline> getGuidelines() {
-        return guidelineService.getGuidelines();
+        return guidelineService.findAll();
     }
 }
