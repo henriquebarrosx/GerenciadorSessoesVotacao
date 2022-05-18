@@ -4,11 +4,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
 @Table
+@Getter
+@Setter
 @Entity
+@ToString
 @NoArgsConstructor
-public class Pauta {
+public class Guideline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +26,7 @@ public class Pauta {
     @Column(nullable = false)
     private Boolean inProgress = false;
 
-    public Pauta(String title, LocalDateTime finishedAt) {
+    public Guideline(String title, LocalDateTime finishedAt) {
         this.title = title;
         this.finishedAt = finishedAt;
     }

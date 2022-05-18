@@ -1,8 +1,8 @@
 package com.example.gerenciador_sessoes_votacao.controllers;
 
 import java.util.List;
-import com.example.gerenciador_sessoes_votacao.entities.Pauta;
-import com.example.gerenciador_sessoes_votacao.services.PautaService;
+import com.example.gerenciador_sessoes_votacao.entities.Guideline;
+import com.example.gerenciador_sessoes_votacao.services.GuidelineService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class SessionController {
-    private final PautaService pautaService;
+public class GuidelineController {
+    private final GuidelineService guidelineService;
 
-    @GetMapping("/pautas")
-    public List<Pauta> buscarPautas() {
-        return pautaService.buscarPautas();
+    @GetMapping("/guidelines")
+    public List<Guideline> getGuidelines() {
+        return guidelineService.fetchGuidelines();
     }
 }
