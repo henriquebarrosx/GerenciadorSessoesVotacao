@@ -8,14 +8,17 @@ import org.springframework.stereotype.Service;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
 import com.example.gerenciador_sessoes_votacao.v1.repositories.GuidelineRepository;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineNotFoundException;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineNotStartedYetException;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineHasBeenFinishedException;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.GuidelineSessionAlreadyStartedException;
 
 @Service
 @RequiredArgsConstructor
 public class GuidelineService {
+
     private final GuidelineRepository guidelineRepository;
 
-    public Guideline create(Guideline payload) {
+    public void createNewGuideline(Guideline payload) {
         Guideline guideline = new Guideline(payload.getTitle(), payload.getDurationInMinutes());
 
         if (guideline.getDurationInMinutes() == null) {
@@ -23,27 +26,40 @@ public class GuidelineService {
             guideline.setDurationInMinutes(defaultSessionDurationTime);
         }
 
-        return guidelineRepository.save(guideline);
+        guidelineRepository.save(guideline);
     }
 
-    public Guideline startSession(Long id) {
-        Guideline guideline = findByById(id);
+    public void startNewSession(Long id) {
+        Guideline guideline = findGuideline(id);
 
-        if (guideline.getFinishedAt() != null) {
-            throw new GuidelineSessionAlreadyStartedException();
+        if (guideline.getFinishedAt().equals(null)) {
+            guideline.setFinishedAt(LocalDateTime.now().plusMinutes(guideline.getDurationInMinutes()));
+            guidelineRepository.save(guideline);
         }
 
-        guideline.setFinishedAt(LocalDateTime.now().plusMinutes(guideline.getDurationInMinutes()));
-        return guidelineRepository.save(guideline);
+        throw new GuidelineSessionAlreadyStartedException();
     }
 
-    public List<Guideline> findAll() {
+    public List<Guideline> findAllGuidelines() {
         return guidelineRepository.findAll();
     }
 
-    public Guideline findByById(Long guidelineId) {
+    public Guideline findGuideline(Long guidelineId) {
         return guidelineRepository
                 .findById(guidelineId)
-                .orElseThrow(() -> new GuidelineNotFoundException(guidelineId));
+                .orElseThrow(() -> new GuidelineNotFoundException("Guideline: " + guidelineId + " not found"));
+    }
+
+    static void validateIfGuidelineIsAbleToReceiveVotes(LocalDateTime finishedAt, Long guidelineId) {
+        Boolean guidelineWasNotStartedYet = finishedAt.equals(null);
+        Boolean guidelineHasBeenFinished = LocalDateTime.now().isAfter(finishedAt);
+
+        if (guidelineWasNotStartedYet) {
+            throw new GuidelineNotStartedYetException(guidelineId);
+        }
+
+        if (guidelineHasBeenFinished) {
+            throw new GuidelineHasBeenFinishedException(guidelineId);
+        }
     }
 }
