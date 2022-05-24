@@ -31,11 +31,11 @@ public class Vote {
     private String value;
 
     @ManyToOne
-    @JoinColumn(name = "guideline_id", nullable = false)
+    @JoinColumn(name = "guideline_id", nullable = false, referencedColumnName = "id")
     private Guideline guideline;
 
     @OneToOne
-    @JoinColumn(name = "associate_id", nullable = false)
+    @JoinColumn(name = "associate_id", nullable = false, referencedColumnName = "cpf")
     private Associate associate;
 
     public Vote(String value, Guideline guideline, Associate associate) {

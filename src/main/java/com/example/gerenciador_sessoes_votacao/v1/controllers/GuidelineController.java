@@ -22,7 +22,7 @@ public class GuidelineController {
     private final GuidelineService guidelineService;
     private final VoteService voteService;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Guideline> getGuidelines() {
         return guidelineService.findAllGuidelines();
     }
@@ -37,7 +37,7 @@ public class GuidelineController {
         return guidelineService.findGuideline(guidelineId);
     }
 
-    @PutMapping("/{id}/start")
+    @GetMapping("/{id}/start")
     public void startGuidelineSession(@PathVariable(value = "id") Long guidelineId) {
         guidelineService.startNewSession(guidelineId);
     }

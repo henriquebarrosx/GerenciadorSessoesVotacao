@@ -2,6 +2,7 @@ package com.example.gerenciador_sessoes_votacao.v1.services;
 
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,10 @@ public class GuidelineService {
     public void startNewSession(Long id) {
         Guideline guideline = findGuideline(id);
 
-        if (guideline.getFinishedAt().equals(null)) {
+        if (Objects.isNull(guideline.getFinishedAt())) {
             guideline.setFinishedAt(LocalDateTime.now().plusMinutes(guideline.getDurationInMinutes()));
             guidelineRepository.save(guideline);
+            return;
         }
 
         throw new GuidelineSessionAlreadyStartedException();
@@ -51,14 +53,11 @@ public class GuidelineService {
     }
 
     static void validateIfGuidelineIsAbleToReceiveVotes(LocalDateTime finishedAt, Long guidelineId) {
-        Boolean guidelineWasNotStartedYet = finishedAt.equals(null);
-        Boolean guidelineHasBeenFinished = LocalDateTime.now().isAfter(finishedAt);
-
-        if (guidelineWasNotStartedYet) {
+        if (Objects.isNull(finishedAt)) {
             throw new GuidelineNotStartedYetException(guidelineId);
         }
 
-        if (guidelineHasBeenFinished) {
+        if (LocalDateTime.now().isAfter(finishedAt)) {
             throw new GuidelineHasBeenFinishedException(guidelineId);
         }
     }
