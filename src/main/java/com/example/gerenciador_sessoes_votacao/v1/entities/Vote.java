@@ -1,5 +1,6 @@
 package com.example.gerenciador_sessoes_votacao.v1.entities;
 
+import com.example.gerenciador_sessoes_votacao.v1.constants.VotesEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,19 +29,18 @@ public class Vote {
     private Long id;
 
     @Column(nullable = false)
-    private String value;
+    private VotesEnum value;
 
     @ManyToOne
     @JoinColumn(name = "guideline_id", nullable = false, referencedColumnName = "id")
     private Guideline guideline;
 
-    @OneToOne
-    @JoinColumn(name = "associate_id", nullable = false, referencedColumnName = "cpf")
-    private Associate associate;
+    @Column(nullable = false)
+    private String associateCpf;
 
-    public Vote(String value, Guideline guideline, Associate associate) {
+    public Vote(VotesEnum value, Guideline guideline, String associateCpf) {
         this.value = value;
         this.guideline = guideline;
-        this.associate = associate;
+        this.associateCpf = associateCpf;
     }
 }

@@ -1,18 +1,19 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.gerenciador_sessoes_votacao.v1.entities.Vote;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
 import com.example.gerenciador_sessoes_votacao.v1.services.VoteService;
 import com.example.gerenciador_sessoes_votacao.v1.services.GuidelineService;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.GuidelineNewVoteRequest;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.GuidelineTotalVotesResponse;
 
 
 @RestController
@@ -43,12 +44,13 @@ public class GuidelineController {
     }
 
     @GetMapping("/{id}/votes")
-    public Long countTotalVotes(@PathVariable(value = "id") Long guidelineId) {
-        return voteService.getGuidelineVotes(guidelineId);
+    public GuidelineTotalVotesResponse countTotalVotes(@PathVariable(value = "id") Long guidelineId) {
+        Long totalVotes = voteService.getGuidelineVotes(guidelineId);
+        return new GuidelineTotalVotesResponse(totalVotes);
     }
 
     @PostMapping("/{id}/votes/new")
-    public void createNewVote(@RequestBody Vote vote) {
-        voteService.createNewVote(vote);
+    public void createNewVote(@PathVariable(value = "id") Long guidelineId, @RequestBody GuidelineNewVoteRequest guidelineNewVote) {
+        voteService.createNewVote(guidelineId, guidelineNewVote);
     }
 }
