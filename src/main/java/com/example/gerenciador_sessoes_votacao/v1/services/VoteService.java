@@ -1,11 +1,16 @@
 package com.example.gerenciador_sessoes_votacao.v1.services;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Vote;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
 import com.example.gerenciador_sessoes_votacao.v1.constants.VotesEnum;
 import com.example.gerenciador_sessoes_votacao.v1.repositories.VoteRepository;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.VotacaoPautaResponse;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.GuidelineNewVoteRequest;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.AssociateAlreadyVotedException;
 
@@ -26,16 +31,46 @@ public class VoteService {
     }
 
     private void validateIfAssociateAlreadyVoted(String associateCpf, Guideline guideline) {
-        voteRepository.findByAssociateCpfAndGuideline(associateCpf, guideline)
-                .ifPresent(vote -> {
-                    throw new AssociateAlreadyVotedException("Associate " + associateCpf + " already voted");
-                });
+        Optional<Vote> byAssociateCpfAndGuideline = voteRepository.findByAssociateCpfAndGuideline(associateCpf, guideline);
+
+        if (byAssociateCpfAndGuideline.isPresent()) {
+            throw new AssociateAlreadyVotedException("Associate " + associateCpf + " already voted");
+        }
     }
 
-    public Long getGuidelineVotes(Long guidelineId) {
+    public VotacaoPautaResponse buscaResultadoFinalVotacao(Long guidelineId) {
         Guideline guideline = guidelineService.findGuideline(guidelineId);
-        GuidelineService.validateIfGuidelineIsAbleToReceiveVotes(guideline.getFinishedAt(), guideline.getId());
+        List<Vote> votes = voteRepository.findByGuideline(guideline);
 
-        return voteRepository.findByGuideline(guideline).stream().count();
+        long totalVotosPositivos = buscarTotalVotosPositivos(votes);
+        long totalVotosNegativos = buscarTotalVotosNegativos(votes);
+
+        return buscaResultadoVotacao(guideline, totalVotosPositivos, totalVotosNegativos);
+    }
+
+    private VotacaoPautaResponse buscaResultadoVotacao(Guideline guideline, Long totalVotosPositivos, Long totalVotosNegativos) {
+        return VotacaoPautaResponse.builder()
+                .tituloPauta(guideline.getTitle())
+                .totalVotosNao(totalVotosNegativos)
+                .totalVotosSim(totalVotosPositivos)
+                .totalVotos(totalVotosPositivos + totalVotosNegativos)
+                .votoVencedor(buscarVotoVencedor(totalVotosPositivos, totalVotosNegativos))
+                .build();
+    }
+
+    private Long buscarTotalVotosPositivos(List<Vote> votosCadastrados) {
+        return votosCadastrados.stream().filter(vote -> vote.getValue().equals(VotesEnum.SIM)).count();
+    }
+
+    private Long buscarTotalVotosNegativos(List<Vote> votosCadastrados) {
+        return votosCadastrados.stream().filter(vote -> vote.getValue().equals(VotesEnum.NAO)).count();
+    }
+
+    private String buscarVotoVencedor(Long totalVotosPositivos, Long totalVotosNegativos) {
+        if (totalVotosPositivos.equals(totalVotosNegativos)) {
+            return "Empate";
+        }
+
+        return totalVotosPositivos > totalVotosNegativos ? VotesEnum.SIM.name() : VotesEnum.NAO.name();
     }
 }

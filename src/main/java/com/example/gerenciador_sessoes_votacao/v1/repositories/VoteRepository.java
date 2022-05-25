@@ -9,7 +9,7 @@ import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
 
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    Optional<List<Vote>> findByGuideline(Guideline guideline);
+    List<Vote> findByGuideline(Guideline guideline);
     Optional<Vote> findByAssociateCpfAndGuideline(String associateCpf, Guideline guideline);
 
 }

@@ -2,6 +2,7 @@ package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
 import java.util.List;
 
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.VotacaoPautaResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import com.example.gerenciador_sessoes_votacao.v1.entities.Guideline;
 import com.example.gerenciador_sessoes_votacao.v1.services.VoteService;
 import com.example.gerenciador_sessoes_votacao.v1.services.GuidelineService;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.GuidelineNewVoteRequest;
-import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.GuidelineTotalVotesResponse;
 
 
 @RestController
@@ -44,9 +44,8 @@ public class GuidelineController {
     }
 
     @GetMapping("/{id}/votes")
-    public GuidelineTotalVotesResponse countTotalVotes(@PathVariable(value = "id") Long guidelineId) {
-        Long totalVotes = voteService.getGuidelineVotes(guidelineId);
-        return new GuidelineTotalVotesResponse(totalVotes);
+    public VotacaoPautaResponse countTotalVotes(@PathVariable(value = "id") Long guidelineId) {
+        return voteService.buscaResultadoFinalVotacao(guidelineId);
     }
 
     @PostMapping("/{id}/votes/new")
