@@ -5,16 +5,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import com.example.gerenciador_sessoes_votacao.v1.exceptions.AssociateNotFoundException;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.SessaoDeVotacaoNaoIniciadaException;
 
 @ControllerAdvice
-public class AssociateNotFoundHandler {
+public class SessaoDeVotacaoNaoIniciadaHandler {
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(AssociateNotFoundException.class)
-    public String getMessage(Exception exception) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(SessaoDeVotacaoNaoIniciadaException.class)
+    public String buscarMensagem(Exception exception) {
         return exception.getMessage();
     }
-
 }

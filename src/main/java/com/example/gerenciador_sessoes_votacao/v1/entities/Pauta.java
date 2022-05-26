@@ -18,7 +18,7 @@ import javax.persistence.GenerationType;
 @Entity
 @ToString
 @NoArgsConstructor
-public class Guideline {
+public class Pauta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,16 +26,16 @@ public class Guideline {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String titulo;
 
     @Column
-    private Long durationInMinutes;
+    private Long duracaoEmMinutos;
 
     @Column
-    private LocalDateTime finishedAt = null;
+    private LocalDateTime horarioEncerramento = null;
 
-    public Guideline(String title, Long durationInMinutes) {
-        this.title = title;
-        this.durationInMinutes = durationInMinutes;
+    public Pauta(String titulo, Long duracaoEmMinutos) {
+        this.titulo = titulo;
+        this.duracaoEmMinutos = duracaoEmMinutos;
     }
 }

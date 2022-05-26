@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class GuidelineTotalVotesResponse {
-    private Long totalVotes;
+public class CadastroVotoRequest {
+    private String valor;
+    private String associadoCpf;
 }

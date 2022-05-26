@@ -1,6 +1,5 @@
 package com.example.gerenciador_sessoes_votacao.v1.entities;
 
-import com.example.gerenciador_sessoes_votacao.v1.constants.VotesEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,11 +8,11 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.NoArgsConstructor;
-import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import com.example.gerenciador_sessoes_votacao.v1.constants.EnumVotos;
 
 @Table
 @Getter
@@ -21,7 +20,7 @@ import javax.persistence.GenerationType;
 @Entity
 @ToString
 @NoArgsConstructor
-public class Vote {
+public class Voto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,18 +28,18 @@ public class Vote {
     private Long id;
 
     @Column(nullable = false)
-    private VotesEnum value;
+    private EnumVotos valor;
 
     @ManyToOne
-    @JoinColumn(name = "guideline_id", nullable = false, referencedColumnName = "id")
-    private Guideline guideline;
+    @JoinColumn(name = "pauta_id", nullable = false, referencedColumnName = "id")
+    private Pauta pauta;
 
     @Column(nullable = false)
-    private String associateCpf;
+    private String associadoCpf;
 
-    public Vote(VotesEnum value, Guideline guideline, String associateCpf) {
-        this.value = value;
-        this.guideline = guideline;
-        this.associateCpf = associateCpf;
+    public Voto(EnumVotos valor, Pauta pauta, String associadoCpf) {
+        this.valor = valor;
+        this.pauta = pauta;
+        this.associadoCpf = associadoCpf;
     }
 }
