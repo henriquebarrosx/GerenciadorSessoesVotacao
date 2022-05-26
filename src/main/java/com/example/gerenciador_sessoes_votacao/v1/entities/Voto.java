@@ -3,15 +3,17 @@ package com.example.gerenciador_sessoes_votacao.v1.entities;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import lombok.NoArgsConstructor;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+
 import com.example.gerenciador_sessoes_votacao.v1.constants.EnumVotos;
 
 @Table
@@ -31,7 +33,7 @@ public class Voto {
     private EnumVotos valor;
 
     @ManyToOne
-    @JoinColumn(name = "pauta_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn
     private Pauta pauta;
 
     @Column(nullable = false)

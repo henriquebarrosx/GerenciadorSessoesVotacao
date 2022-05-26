@@ -3,10 +3,12 @@ package com.example.gerenciador_sessoes_votacao.v1.entities;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
-import javax.persistence.Table;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

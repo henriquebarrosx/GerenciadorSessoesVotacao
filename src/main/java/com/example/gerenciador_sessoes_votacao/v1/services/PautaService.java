@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import com.example.gerenciador_sessoes_votacao.v1.entities.Pauta;
 import com.example.gerenciador_sessoes_votacao.v1.repositories.PautaRepository;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.PautaEncerradaException;

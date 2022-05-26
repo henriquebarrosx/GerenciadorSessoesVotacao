@@ -34,7 +34,7 @@ public class PautaController {
         pautaService.cadastrarPauta(pauta);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Pauta buscarPauta(@PathVariable(value = "id") Long pautaId) {
         return pautaService.buscarPauta(pautaId);
     }
