@@ -1,9 +1,6 @@
 package com.example.gerenciador_sessoes_votacao.v1.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +15,10 @@ import javax.persistence.GenerationType;
 @Getter
 @Setter
 @Entity
+@Builder
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Pauta {
 
     @Id

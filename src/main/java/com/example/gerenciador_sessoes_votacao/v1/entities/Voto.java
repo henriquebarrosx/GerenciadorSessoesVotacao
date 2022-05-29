@@ -1,9 +1,6 @@
 package com.example.gerenciador_sessoes_votacao.v1.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,8 +17,10 @@ import com.example.gerenciador_sessoes_votacao.v1.constants.EnumVotos;
 @Getter
 @Setter
 @Entity
+@Builder
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Voto {
 
     @Id
