@@ -3,7 +3,6 @@ package com.example.gerenciador_sessoes_votacao.v1.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.gerenciador_sessoes_votacao.v1.exceptions.CadastroDeVotosPorAssociadoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +10,9 @@ import com.example.gerenciador_sessoes_votacao.v1.entities.Voto;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Pauta;
 import com.example.gerenciador_sessoes_votacao.v1.constants.EnumVotos;
 import com.example.gerenciador_sessoes_votacao.v1.repositories.VotoRepository;
-import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoResponse;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.CadastroVotoRequest;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoResponse;
+import com.example.gerenciador_sessoes_votacao.v1.exceptions.CadastroDeVotosPorAssociadoException;
 
 @Service
 @RequiredArgsConstructor

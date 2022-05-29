@@ -1,22 +1,14 @@
 package com.example.gerenciador_sessoes_votacao.v1.entities;
 
 import lombok.*;
-
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 @Table
-@Getter
 @Setter
+@Getter
 @Entity
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pauta {

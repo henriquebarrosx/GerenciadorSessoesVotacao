@@ -15,7 +15,6 @@ import com.example.gerenciador_sessoes_votacao.v1.services.PautaService;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.CadastroVotoRequest;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoResponse;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/pautas")
