@@ -10,18 +10,18 @@ import com.example.gerenciador_sessoes_votacao.v1.entities.Voto;
 import com.example.gerenciador_sessoes_votacao.v1.entities.Pauta;
 import com.example.gerenciador_sessoes_votacao.v1.constants.EnumVotos;
 import com.example.gerenciador_sessoes_votacao.v1.repositories.VotoRepository;
-import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.CadastroVotoRequest;
-import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoResponse;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.CadastroVotoDTO;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoDTO;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.CadastroDeVotosPorAssociadoException;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class VotoService {
 
     private final PautaService pautaService;
     private final VotoRepository votoRepository;
 
-    public void cadastrarVoto(Long pautaId, CadastroVotoRequest voto) {
+    public void cadastrarVoto(Long pautaId, CadastroVotoDTO voto) {
         Pauta pauta = pautaService.buscarPauta(pautaId);
 
         PautaService.validarStatusDaPauta(pauta.getHorarioEncerramento(), pauta.getId());
@@ -39,7 +39,7 @@ public class VotoService {
         }
     }
 
-    public ResultadoVotacaoResponse buscarTotalVotos(Long guidelineId) {
+    public ResultadoVotacaoDTO buscarTotalVotos(Long guidelineId) {
         Pauta pauta = pautaService.buscarPauta(guidelineId);
         List<Voto> votos = votoRepository.findByPauta(pauta);
 
@@ -49,8 +49,8 @@ public class VotoService {
         return buscaResultadoVotacao(pauta, totalVotosPositivos, totalVotosNegativos);
     }
 
-    private ResultadoVotacaoResponse buscaResultadoVotacao(Pauta pauta, Long totalVotosPositivos, Long totalVotosNegativos) {
-        return ResultadoVotacaoResponse.builder()
+    private ResultadoVotacaoDTO buscaResultadoVotacao(Pauta pauta, Long totalVotosPositivos, Long totalVotosNegativos) {
+        return ResultadoVotacaoDTO.builder()
                 .tituloPauta(pauta.getTitulo())
                 .totalVotosNao(totalVotosNegativos)
                 .totalVotosSim(totalVotosPositivos)

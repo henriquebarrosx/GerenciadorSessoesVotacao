@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ResultadoVotacaoResponse {
+public class ResultadoVotacaoDTO {
     private Long totalVotos;
     private Long totalVotosSim;
     private Long totalVotosNao;

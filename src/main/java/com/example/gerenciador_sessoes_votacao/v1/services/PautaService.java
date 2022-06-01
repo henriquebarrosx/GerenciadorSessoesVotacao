@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.time.LocalDateTime;
 
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.CadastroPautaDTO;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +17,8 @@ import com.example.gerenciador_sessoes_votacao.v1.exceptions.PautaNaoEncontradaE
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.SessaoDeVotacaoJaIniciadaException;
 import com.example.gerenciador_sessoes_votacao.v1.exceptions.SessaoDeVotacaoNaoIniciadaException;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class PautaService {
 
     private final Long DURACAO_PADRAO_PAUTA = 1L;
@@ -25,7 +28,7 @@ public class PautaService {
         return pautaRepository.findAll();
     }
 
-    public void cadastrarPauta(Pauta payload) {
+    public Pauta cadastrarPauta(CadastroPautaDTO payload) {
         Pauta pauta = new Pauta(payload.getTitulo(), payload.getDuracaoEmMinutos());
 
         if (Objects.isNull(pauta.getDuracaoEmMinutos())) {
@@ -33,6 +36,7 @@ public class PautaService {
         }
 
         pautaRepository.save(pauta);
+        return pauta;
     }
 
     public void iniciarSessaoVotacao(Long id) {

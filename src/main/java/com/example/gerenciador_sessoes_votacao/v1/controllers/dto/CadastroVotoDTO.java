@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class CadastroVotoRequest {
+public class CadastroVotoDTO {
     private String valor;
     private String associadoCpf;
 }
