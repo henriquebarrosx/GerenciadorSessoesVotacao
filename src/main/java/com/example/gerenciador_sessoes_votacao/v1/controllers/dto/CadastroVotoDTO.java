@@ -1,9 +1,11 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers.dto;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
-@Data
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class CadastroVotoDTO {
     private String valor;

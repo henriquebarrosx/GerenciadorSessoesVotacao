@@ -1,11 +1,15 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static com.example.gerenciador_sessoes_votacao.v1.builders.PautaBuilders.*;
 
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoDTO;
 import com.example.gerenciador_sessoes_votacao.v1.services.VotoService;
 import com.example.gerenciador_sessoes_votacao.v1.services.PautaService;
+import static com.example.gerenciador_sessoes_votacao.v1.builders.VotoBuilders.obterResultadoVotacao;
 
 import org.junit.jupiter.api.Test;
 import io.restassured.http.ContentType;
@@ -38,7 +42,7 @@ public class PautaControllerTest {
                 .when()
                 .get("/api/v1/pautas", obterListaDePautas())
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .status(HttpStatus.OK);
     }
 
     @Test
@@ -52,6 +56,45 @@ public class PautaControllerTest {
                 .when()
                 .post("/api/v1/pautas", obterUmaPauta())
                 .then()
-                .statusCode(HttpStatus.CREATED.value());
+                .status(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void deveRetornarSucesso_QuandoBuscarPautaPorId() {
+        when(this.pautaService.buscarPauta(anyLong()))
+                .thenReturn(obterUmaPauta());
+
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/v1/pautas", obterUmaPauta())
+                .then()
+                .status(HttpStatus.OK);
+    }
+
+    @Test
+    public void deveRetornarSucesso_QuandoIniciarSessaoDeVotacaoDaPauta() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/v1/pautas/{id}/iniciar", 1L)
+                .then()
+                .status(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    public void deveRetornarSucesso_QuandoBuscarTotalDeVotosDeUmaSessaoDeVotacao() {
+        when(this.votoService.buscarTotalVotos(1L))
+                .thenReturn(obterResultadoVotacao());
+
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/v1/pautas/{id}/votos", 1L)
+                .then()
+                .assertThat()
+                .status(HttpStatus.OK)
+                .extract()
+                .as(ResultadoVotacaoDTO.class);
     }
 }

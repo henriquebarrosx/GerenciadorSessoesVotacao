@@ -1,15 +1,14 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers.dto;
 
-import lombok.Data;
-import lombok.Builder;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
-@Data
 @Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class ResultadoVotacaoDTO {
     private Long totalVotos;
     private Long totalVotosSim;
