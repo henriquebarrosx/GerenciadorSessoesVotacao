@@ -1,14 +1,13 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static com.example.gerenciador_sessoes_votacao.v1.builders.PautaBuilders.*;
 
-import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoDTO;
 import com.example.gerenciador_sessoes_votacao.v1.services.VotoService;
 import com.example.gerenciador_sessoes_votacao.v1.services.PautaService;
+import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoDTO;
 import static com.example.gerenciador_sessoes_votacao.v1.builders.VotoBuilders.obterResultadoVotacao;
 
 import org.junit.jupiter.api.Test;
