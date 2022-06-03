@@ -1,14 +1,14 @@
 package com.example.gerenciador_sessoes_votacao.v1.controllers;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
+import static com.example.gerenciador_sessoes_votacao.v1.builders.VotoBuilders.*;
 import static com.example.gerenciador_sessoes_votacao.v1.builders.PautaBuilders.*;
 
+import com.example.gerenciador_sessoes_votacao.v1.entities.Pauta;
 import com.example.gerenciador_sessoes_votacao.v1.services.VotoService;
 import com.example.gerenciador_sessoes_votacao.v1.services.PautaService;
 import com.example.gerenciador_sessoes_votacao.v1.controllers.dto.ResultadoVotacaoDTO;
-import static com.example.gerenciador_sessoes_votacao.v1.builders.VotoBuilders.obterResultadoVotacao;
 
 import org.junit.jupiter.api.Test;
 import io.restassured.http.ContentType;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
 
 @WebMvcTest(controllers = PautaController.class)
 public class PautaControllerTest {
@@ -39,9 +38,12 @@ public class PautaControllerTest {
         given()
                 .accept(ContentType.JSON)
                 .when()
-                .get("/api/v1/pautas", obterListaDePautas())
+                .get("/api/v1/pautas")
                 .then()
-                .status(HttpStatus.OK);
+                .assertThat()
+                .status(HttpStatus.OK)
+                .extract()
+                .as(Pauta[].class);
     }
 
     @Test
@@ -60,15 +62,18 @@ public class PautaControllerTest {
 
     @Test
     public void deveRetornarSucesso_QuandoBuscarPautaPorId() {
-        when(this.pautaService.buscarPauta(anyLong()))
+        when(this.pautaService.buscarPauta(1L))
                 .thenReturn(obterUmaPauta());
 
         given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/v1/pautas", obterUmaPauta())
+                .get("/api/v1/pautas/{id}", 1L)
                 .then()
-                .status(HttpStatus.OK);
+                .assertThat()
+                .status(HttpStatus.OK)
+                .extract()
+                .as(Pauta.class);
     }
 
     @Test
@@ -95,5 +100,16 @@ public class PautaControllerTest {
                 .status(HttpStatus.OK)
                 .extract()
                 .as(ResultadoVotacaoDTO.class);
+    }
+
+    @Test
+    public void deveRetornarSucesso_QuandoCadastrarVotoEmUmaPauta() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(obterVotoParaCadastro())
+                .when()
+                .post("/api/v1/pautas/{id}/votos", 1L)
+                .then()
+                .status(HttpStatus.NO_CONTENT);
     }
 }
